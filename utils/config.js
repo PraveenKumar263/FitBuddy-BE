@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT || 3001;
@@ -7,19 +7,19 @@ const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS) || 10;
 const EMAIL_ID = process.env.EMAIL_ID;
 const EMAIL_PWD = process.env.EMAIL_PWD;
 const FRONTEND_URL = process.env.FRONTEND_URL;
-const SMTP_EMAIL_HOST = process.env.SMTP_EMAIL_HOST || 'gmail';
+const SMTP_EMAIL_HOST = process.env.SMTP_EMAIL_HOST || "gmail";
 const SECRET_KEY = process.env.SECRET_KEY;
 const BACKEND_LINK = process.env.BACKEND_LINK;
 
 module.exports = {
-    MONGODB_URI,
-    PORT,
-    JWT_TOKEN,
-    SALT_ROUNDS,
-    EMAIL_ID,
-    EMAIL_PWD,
-    FRONTEND_URL,
-    SMTP_EMAIL_HOST,
-    SECRET_KEY,
-    BACKEND_LINK
+  MONGODB_URI,
+  PORT,
+  JWT_TOKEN,
+  SALT_ROUNDS,
+  EMAIL_ID,
+  EMAIL_PWD,
+  FRONTEND_URL,
+  SMTP_EMAIL_HOST,
+  SECRET_KEY,
+  BACKEND_LINK,
 };

@@ -1,21 +1,31 @@
 // Imports
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Create a new schema
-const availabilitySchema = mongoose.Schema({
+const availabilitySchema = mongoose.Schema(
+  {
     trainer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Trainer',
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Trainer",
+      required: true,
     },
-    availableSlots: [{
+    availableSlots: [
+      {
         startTime: { type: Date, required: true },
-        endTime: { type: Date, required: true }
-    }],
-},
-    {
-        timestamps: true
-    });
+        endTime: { type: Date, required: true },
+        booked: { type: Boolean, default: false },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
 // Create a new model and export it
-module.exports = mongoose.model('Availability', availabilitySchema, 'availabilities');
+module.exports = mongoose.model(
+  "Availability",
+  availabilitySchema,
+  "availabilities"
+);

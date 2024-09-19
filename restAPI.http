@@ -1,0 +1,319 @@
+@jwtTokenUser1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExNGQ5ZjM0MmIxZjU3OTUxNmUiLCJlbWFpbCI6Im1hcmsudGF5bG9yQGV4YW1wbGUuY29tIiwiaWF0IjoxNzI2NDk5MDQ4LCJleHAiOjE3MjY1ODU0NDh9.fgnYrc-I-cf3DTo1NLzsYe3NqMNEjSJWbvKe7zYjbiw
+@jwtTokenUser2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MmZlZDQ1NzMwNDAxMTk3MDlhY2EiLCJlbWFpbCI6ImphbmUuc21pdGhAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM4NzAsImV4cCI6MTcyNjU4MDI3MH0.hL77DXkhHr51OeS2_EgmRQfvg8jjLtJ-AGixEaI0Wnc
+@jwtTokenUser3 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MmZlZjQ1NzMwNDAxMTk3MDlhY2QiLCJlbWFpbCI6ImFsaWNlLmpvaG5zb25AZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM4OTAsImV4cCI6MTcyNjU4MDI5MH0.QAjJWrrYmARa1LpKsa7cf6WtpObzfMkt7SRa-mYbnHI
+@jwtTokenTrainer1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExNGQ5ZjM0MmIxZjU3OTUxNmUiLCJlbWFpbCI6Im1hcmsudGF5bG9yQGV4YW1wbGUuY29tIiwiaWF0IjoxNzI2NDk1ODYzLCJleHAiOjE3MjY1ODIyNjN9.fbqX-hNhW7Jb-9YSyEblAWhZ8s8182hBfjrwZcd_fDI
+@jwtTokenTrainer2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExYWQ5ZjM0MmIxZjU3OTUxNzMiLCJlbWFpbCI6Im5pbmEud2lsbGlhbXNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM5MzksImV4cCI6MTcyNjU4MDMzOX0.lwjzB4q23GPLuvn_b21EoLbiKih-Jiy76ikPT4Cp8N4
+
+### Register User 1
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.comjohn.doe@example.com",
+  "password": "password123",
+  "role": "user"
+}
+
+### Register User 2
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "email": "jane.smith@example.com",
+  "password": "password123",
+  "role": "user"
+}
+
+### Register User 3
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "email": "alice.johnson@example.com",
+  "password": "password123",
+  "role": "user"
+}
+
+### Register Trainer 1
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Mark",
+  "lastName": "Taylor",
+  "email": "mark.taylor@example.com",
+  "password": "password123",
+  "role": "trainer"
+}
+
+### Register Trainer 2
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Nina",
+  "lastName": "Williams",
+  "email": "nina.williams@example.com",
+  "password": "password123",
+  "role": "trainer"
+}
+
+### Activate User 1
+PUT http://localhost:3001/api/v1/auth/activate
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "activationToken": "p4u2VXI1aBZ16DepbdYY"
+}
+
+### Activate User 2
+PUT http://localhost:3001/api/v1/auth/activate
+Content-Type: application/json
+
+{
+  "email": "jane.smith@example.com",
+  "activationToken": "hCb2gKwqLTkak2LfaFPC"
+}
+
+### Activate User 3
+PUT http://localhost:3001/api/v1/auth/activate
+Content-Type: application/json
+
+{
+  "email": "alice.johnson@example.com",
+  "activationToken": "wh7Vj3JNjdhZ2C4VcCyf"
+}
+
+### Activate Trainer 1
+PUT http://localhost:3001/api/v1/auth/activate
+Content-Type: application/json
+
+{
+  "email": "mark.taylor@example.com",
+  "activationToken": "cxraCCmwYi2FOuGJLfuu"
+}
+
+### Activate Trainer 2
+PUT http://localhost:3001/api/v1/auth/activate
+Content-Type: application/json
+
+{
+  "email": "nina.williams@example.com",
+  "activationToken": "pBHfKLnwpXYECC0OdaKw"
+}
+
+### Login User 1
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+
+### Login User 2
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "jane.smith@example.com",
+  "password": "password123"
+}
+
+### Login User 3
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "alice.johnson@example.com",
+  "password": "password123"
+}
+
+### Login Trainer 1
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "mark.taylor@example.com",
+  "password": "password123"
+}
+
+### Login Trainer 2
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "nina.williams@example.com",
+  "password": "password123"
+}
+
+### Update User 1 Details
+PUT http://localhost:3001/api/v1/users/me
+Content-Type: application/json
+Authorization: Bearer @jwtTokenUser1
+
+{
+  "firstName": "Johnathan",
+  "lastName": "Doe",
+  "phone": "+1234567890",
+  "profilePicture": "http://example.com/profile.jpg",
+  "fitnessGoals": ["Weight Loss", "Muscle Gain"],
+  "preferences": {
+    "classTypes": ["Yoga", "Pilates"],
+    "preferredTimes": ["Morning", "Evening"]
+  }
+}
+
+### Update Trainer 1 Details
+PUT http://localhost:3001/api/v1/users/me
+Content-Type: application/json
+Authorization: Bearer @jwtTokenTrainer1
+
+{
+  "qualifications": ["Certified Personal Trainer"],
+  "expertise": ["Strength Training", "Cardio"],
+  "specializations": ["Weight Loss", "Bodybuilding"],
+  "availableTimes": ["Weekdays 6am-10am", "Weekends 9am-1pm"],
+  "profilePicture": "http://example.com/trainer-profile.jpg",
+  "introduction": "Experienced trainer with a passion for fitness.",
+  "photos": ["http://example.com/photo1.jpg", "http://example.com/photo2.jpg"],
+  "videos": ["http://example.com/video1.mp4"]
+}
+
+### Trainer 2 availability slots
+POST http://localhost:3001/api/v1/availability
+Content-Type: application/json
+Authorization: Bearer @jwtTokenTrainer2
+
+{
+  "trainerId": "66e8311ad9f342b1f5795175",
+  "availableSlots": [
+    {
+      "startTime": "2024-09-17T09:00:00Z",
+      "endTime": "2024-09-17T10:00:00Z"
+    },
+    {
+      "startTime": "2024-09-18T14:00:00Z",
+      "endTime": "2024-09-18T15:00:00Z"
+    }
+  ],
+  "timeZone": "UTC"
+}
+
+### Get timeslots of trainer 2
+GET http://localhost:3001/api/v1/availability/66e8311ad9f342b1f5795175
+Authorization: Bearer @jwtTokenTrainer2
+
+### Create a class
+POST http://localhost:3001/api/v1/classes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExYWQ5ZjM0MmIxZjU3OTUxNzMiLCJlbWFpbCI6Im5pbmEud2lsbGlhbXNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM5MzksImV4cCI6MTcyNjU4MDMzOX0.lwjzB4q23GPLuvn_b21EoLbiKih-Jiy76ikPT4Cp8N4
+
+{
+  "title": "Beginner Pilates",
+  "type": "cardio",
+  "intensity": "Low",
+  "duration": "1 hour",
+  "description": "A gentle introduction to Pilates focusing on core strength and flexibility.",
+  "location": "Studio A",
+  "trainerId": "66e8311ad9f342b1f5795175",
+  "startTime": "2024-09-17T09:00:00",
+  "endTime": "2024-09-17T10:00:00",
+  "timezone": "America/New York",
+  "capacity": 10
+}
+
+### Get All Classes
+GET http://localhost:3001/api/v1/classes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExYWQ5ZjM0MmIxZjU3OTUxNzMiLCJlbWFpbCI6Im5pbmEud2lsbGlhbXNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM5MzksImV4cCI6MTcyNjU4MDMzOX0.lwjzB4q23GPLuvn_b21EoLbiKih-Jiy76ikPT4Cp8N4
+
+### Get a Specific Class by ID
+GET http://localhost:3001/api/v1/classes/66e850ae913a41ff225e0959
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExYWQ5ZjM0MmIxZjU3OTUxNzMiLCJlbWFpbCI6Im5pbmEud2lsbGlhbXNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM5MzksImV4cCI6MTcyNjU4MDMzOX0.lwjzB4q23GPLuvn_b21EoLbiKih-Jiy76ikPT4Cp8N4
+
+### Update a Class
+PUT http://localhost:3001/api/v1/classes/66e850ae913a41ff225e0959
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmU4MzExYWQ5ZjM0MmIxZjU3OTUxNzMiLCJlbWFpbCI6Im5pbmEud2lsbGlhbXNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MjY0OTM5MzksImV4cCI6MTcyNjU4MDMzOX0.lwjzB4q23GPLuvn_b21EoLbiKih-Jiy76ikPT4Cp8N4
+
+{
+  "location": "Studio C"
+}
+
+### Delete a Class
+DELETE http://localhost:3001/api/v1/classes/60d5f44956e2d0f1b4f5e17b
+Authorization: Bearer @jwtTokenUser1
+
+### Create Availability
+POST http://localhost:3001/api/v1/availability
+Content-Type: application/json
+Authorization: Bearer @jwtTokenTrainer1
+
+{
+  "trainerId": "60d5f44956e2d0f1b4f5e17b",
+  "availableSlots": [
+    {
+      "startTime": "2024-09-17T09:00:00Z",
+      "endTime": "2024-09-17T10:00:00Z"
+    },
+    {
+      "startTime": "2024-09-18T14:00:00Z",
+      "endTime": "2024-09-18T15:00:00Z"
+    }
+  ],
+  "timeZone": "UTC"
+}
+
+### Get Availability by Trainer ID
+GET http://localhost:3001/api/v1/availability/60d5f44956e2d0f1b4f5e17b
+Authorization: Bearer @jwtTokenTrainer1
+
+### Create a Booking
+POST http://localhost:3001/api/v1/bookings
+Content-Type: application/json
+Authorization: Bearer @jwtTokenUser1
+
+{
+  "userId": "60d5f44956e2d0f1b4f5e17c",
+  "classId": "60d5f44956e2d0f1b4f5e17b",
+  "startTime": "2024-09-17T09:00:00Z",
+  "endTime": "2024-09-17T10:00:00Z"
+}
+
+### Get All Bookings
+GET http://localhost:3001/api/v1/bookings
+Authorization: Bearer @jwtTokenUser1
+
+### Get a Specific Booking by ID
+GET http://localhost:3001/api/v1/bookings/60d5f44956e2d0f1b4f5e17c
+Authorization: Bearer @jwtTokenUser1
+
+### Update a Booking
+PUT http://localhost:3001/api/v1/bookings/60d5f44956e2d0f1b4f5e17c
+Content-Type: application/json
+Authorization: Bearer @jwtTokenUser1
+
+{
+  "startTime": "2024-09-17T10:00:00Z",
+  "endTime": "2024-09-17T11:00:00Z"
+}
+
+### Delete a Booking
+DELETE http://localhost:3001/api/v1/bookings/60d5f44956e2d0f1b4f5e17c
+Authorization: Bearer @jwtTokenUser1
+
+### Calculate Recommendations
+POST http://localhost:3001/api/v1/recommendations
+Content-Type: application/json
+Authorization: Bearer @jwtTokenUser1
+
+{
+  "userId": "60d5f44956e2d0f1b4f5e17c"
+}
