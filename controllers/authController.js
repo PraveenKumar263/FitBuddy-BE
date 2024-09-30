@@ -126,11 +126,12 @@ const authController = {
       // Store the token in the cookie
       res.cookie("token", token, {
         httpOnly: true,
-        sameSite: "none",
-        secure: true,
+        sameSite: "lax", // none for prod
+        secure: false, // Change to true if using HTTPS
+        maxAge: 24 * 60 * 60 * 1000,
       });
 
-      return res.json({ message: "Login successful" });
+      return res.json({ message: "Login successful", user: user._id });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -211,6 +212,16 @@ const authController = {
       res.clearCookie("token").json({ message: "Logout successful" });
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  },
+  isAuthenticated: async (req, res) => {
+    try {
+      if (!req.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      res.json({ userId: req.userId });
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
     }
   },
 };

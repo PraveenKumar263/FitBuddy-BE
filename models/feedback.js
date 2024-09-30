@@ -21,6 +21,16 @@ const feedbackSchema = mongoose.Schema(
       required: true,
     },
     comment: String,
+    booking: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+      required: true,
+    },
+    class: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
+      required: true,
+    },
   },
   {
     timestamps: true,

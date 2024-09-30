@@ -10,8 +10,8 @@ const trainerRouter = require("./routes/trainerRoutes");
 const bookingRouter = require("./routes/bookingRoutes");
 const feedbackRouter = require("./routes/feedbackRoutes");
 const recommendationRouter = require("./routes/recommendationRoutes");
-const availabilityRouter = require("./routes/availabilityRoutes");
 const userRouter = require("./routes/userRoutes");
+const paymentRouter = require("./routes/paymentRoutes");
 
 const whiteList = [FRONTEND_URL, "http://localhost:5173"];
 
@@ -44,7 +44,7 @@ app.use("/api/v1/classes", classRouter);
 app.use("/api/v1/bookings", bookingRouter);
 app.use("/api/v1/feedback", feedbackRouter);
 app.use("/api/v1/recommendations", recommendationRouter);
-app.use("/api/v1/availability", availabilityRouter);
+app.use("/api/v1/payment", paymentRouter);
 
 // Add logging middleware for debugging
 // app.use((req, res, next) => {

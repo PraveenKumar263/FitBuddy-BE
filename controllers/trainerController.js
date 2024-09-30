@@ -46,6 +46,17 @@ const trainerController = {
       res.status(500).json({ message: error.message });
     }
   },
+  getFeaturedTrainers: async (req, res) => {
+    try {
+      const trainers = await Trainer.find()
+        .sort({ rating: -1 })
+        .limit(3)
+        .populate("user", "firstName lastName");
+      return res.json(trainers || []);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = trainerController;

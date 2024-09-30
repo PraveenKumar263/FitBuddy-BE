@@ -25,6 +25,15 @@ const userSchema = mongoose.Schema(
       classTypes: [String],
       preferredTimes: [String],
     },
+    membership: {
+      plan: {
+        type: String,
+        enum: ["monthly", "yearly"],
+        default: null,
+      },
+      expirationDate: { type: Date, default: null },
+    },
+    stripeCustomerId: { type: String, default: null },
   },
   {
     timestamps: true,

@@ -13,14 +13,10 @@ const classSchema = mongoose.Schema(
       required: true,
     },
     duration: { type: Number, required: true },
-    schedule: [
-      {
-        startTime: { type: Date, required: true },
-        endTime: { type: Date, required: true },
-        capacity: { type: Number, required: true },
-        slotsAvailable: { type: Number, required: true },
-      },
-    ],
+    startTime: { type: Date, required: true },
+    endTime: { type: Date, required: true },
+    capacity: { type: Number, required: true },
+    slotsAvailable: { type: Number, required: true },
     bookings: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -28,7 +24,7 @@ const classSchema = mongoose.Schema(
       },
     ],
     rating: { type: Number, min: 0, max: 5 },
-    tags: [String],
+    // tags: [String],
     trainer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Trainer",

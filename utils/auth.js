@@ -11,17 +11,6 @@ const auth = {
         return res.status(401).json({ message: "Unauthorized" });
       }
 
-      // Extract token from Authorization header
-      // const authHeader = req.headers.authorization;
-      // if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      //     return res.status(401).json({ message: 'Unauthorized' });
-      // }
-
-      // const token = authHeader.split(' ')[1]; // Extract token part from "Bearer <token>"
-      // if (!token) {
-      //     return res.status(401).json({ message: 'Unauthorized' });
-      // }
-
       try {
         // Verify the token
         const decodedToken = jwt.verify(token, SECRET_KEY);

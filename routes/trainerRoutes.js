@@ -3,6 +3,9 @@ const trainerRouter = express.Router();
 const trainerController = require("../controllers/trainerController");
 const auth = require("../utils/auth");
 
+// Get featured trainers
+trainerRouter.get("/featured", trainerController.getFeaturedTrainers);
+
 // Get all trainers
 trainerRouter.get("/", auth.verifyToken, trainerController.getAllTrainers);
 

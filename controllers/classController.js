@@ -1,6 +1,6 @@
 const Class = require("../models/class");
-const { checkAvailabilityOverlap } = require("../utils/availabilityUtils");
-const { convertToUTC } = require("../utils/dateUtils");
+const { convertFromUTC } = require("../utils/dateUtils");
+const Bookings = require("../models/booking");
 
 const classController = {
   createClass: async (req, res) => {
@@ -17,41 +17,36 @@ const classController = {
       // Convert startTime and endTime to Date objects and then to UTC
       const startTimeDate = new Date(startTime);
       const endTimeDate = new Date(endTime);
-      const startTimeUtc = convertToUTC(startTimeDate, timeZone);
-      const endTimeUtc = convertToUTC(endTimeDate, timeZone);
 
-      // Class schedule
-      const schedule = [
-        {
-          date: startTimeDate.toISOString().split("T")[0],
-          startTime: startTimeUtc,
-          endTime: endTimeUtc,
-          capacity: capacity,
-          slotsAvailable: capacity,
-        },
-      ];
-
-      const durationInMinutes = Math.round(
+      const durationInMinutes = Math.ceil(
         (endTimeDate - startTimeDate) / (1000 * 60)
       );
 
-      // Check for overlapping availability and bookings
-      const isAvailable = await checkAvailabilityOverlap(
-        trainerId,
-        startTimeUtc,
-        endTimeUtc
-      );
-      if (!isAvailable) {
+      // Check trainer's class schedule clash
+      const isClassClash = await Class.findOne({
+        trainer: trainerId,
+        $or: [
+          {
+            startTime: { $lt: endTimeUtc },
+            endTime: { $gt: startTimeUtc },
+          },
+        ],
+      });
+      if (isClassClash) {
         return res
           .status(400)
-          .json({ message: "No available slot for the class" });
+          .json({ message: "Class time conflicts with an existing class." });
       }
 
       // Create and save the new class
       const newClass = new Class({
         ...classData,
+        startTime: startTimeDate,
+        endTime: endTimeDate,
+        timeZone,
+        capacity,
         duration: durationInMinutes,
-        schedule,
+        slotsAvailable: capacity,
         trainer: trainerId,
       });
       const savedClass = await newClass.save();
@@ -74,7 +69,6 @@ const classController = {
   getAllClassesByTrainerId: async (req, res) => {
     try {
       const { trainerId } = req.params;
-
       // Get all classes
       const classes = await Class.find({ trainer: trainerId });
 
@@ -125,16 +119,37 @@ const classController = {
   updateClass: async (req, res) => {
     try {
       const { classId } = req.params;
+      const { startTime, endTime, capacity, bookings } = req.body;
+
+      const startDate = new Date(startTime);
+      const endDate = new Date(endTime);
+
+      const durationInMinutes = Math.ceil((endDate - startDate) / (1000 * 60));
+
+      const countConfirmedBookings =
+        (await Bookings.countDocuments({
+          class: classId,
+          status: "Booked",
+        })) || 0;
+
+      const newSlotsAvailable = capacity - countConfirmedBookings;
+      const updatedClass = {
+        ...req.body,
+        startTime: startDate,
+        endTime: endDate,
+        slotsAvailable: newSlotsAvailable,
+        duration: durationInMinutes,
+      };
 
       // Update class, if found
-      const updatedClass = await Class.findByIdAndUpdate(classId, req.body, {
+      const savedClass = await Class.findByIdAndUpdate(classId, updatedClass, {
         new: true,
       });
-      if (!updatedClass) {
+      if (!savedClass) {
         return res.status(400).json({ message: "Class not found" });
       }
 
-      return res.json(updatedClass);
+      return res.json(savedClass);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -152,6 +167,16 @@ const classController = {
       }
 
       return res.json("Class deleted successfully");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getFeaturedClasses: async (req, res) => {
+    try {
+      // Get all classes
+      const classes = await Class.find().sort({ rating: -1 }).limit(3);
+
+      return res.json(classes || []);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

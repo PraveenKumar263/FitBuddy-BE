@@ -5,31 +5,44 @@ const { convertToUTC } = require("../utils/dateUtils");
 const bookingController = {
   createBooking: async (req, res) => {
     try {
-      const { userId, classId, scheduleId } = req.body;
+      const { userId, classId } = req.body;
 
       // Find class and schedule
       const classDetails = await Class.findById(classId);
-      const schedule = classDetails.schedule.id(scheduleId);
-      if (!schedule) {
-        return res.status(400).json({ message: "Schedule not found" });
-      }
 
       // Check if there are available slots
-      if (schedule.slotsAvailable <= 0) {
+      if (classDetails.slotsAvailable <= 0) {
         return res.status(400).json({ message: "No available slots" });
       }
 
+      // Check for overlapping bookings
+      const overlappingBookings = await Booking.find({
+        user: userId,
+        status: "Booked",
+        $or: [
+          {
+            startTime: { $lt: classDetails.endTime },
+            endTime: { $gt: classDetails.startTime },
+          },
+        ],
+      });
+
+      if (overlappingBookings.length > 0) {
+        return res
+          .status(400)
+          .json({ message: "Booking time overlaps with an existing booking" });
+      }
+
       // Update available slots
-      schedule.slotsAvailable -= 1;
+      classDetails.slotsAvailable -= 1;
 
       // Save booking
       const newBooking = new Booking({
         class: classId,
-        schedule: scheduleId,
         user: userId,
       });
       const savedBooking = await newBooking.save();
-
+      await classDetails.save();
       return res.status(201).json(savedBooking);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -40,7 +53,9 @@ const bookingController = {
       const { userId } = req.params;
 
       // Find all bookings for the user
-      const bookings = await Booking.find({ user: userId }).populate("class");
+      const bookings = await Booking.find({ user: userId })
+        .populate("class")
+        .sort({ updatedAt: -1 });
 
       return res.json(bookings);
     } catch (error) {
@@ -161,21 +176,17 @@ const bookingController = {
       if (!booking) {
         return res.status(400).json({ message: "Booking not found" });
       }
-
+      booking.status = "Cancelled";
       // Get the class and schedule
       const classDetails = await Class.findById(booking.class);
       if (!classDetails) {
         return res.status(400).json({ message: "Class not found" });
       }
 
-      classDetails.schedule.find((s) => {
-        if (s.startTime <= booking.startTime && s.endTime >= booking.endTime) {
-          s.slotsAvailable += 1;
-        }
-      });
+      classDetails.slotsAvailable += 1;
 
-      // Delete booking
-      await Booking.findByIdAndDelete(bookingId);
+      // Cancel booking
+      await booking.save();
 
       // Update class details
       await classDetails.save();
@@ -184,6 +195,44 @@ const bookingController = {
         .status(200)
         .json({ message: "Booking cancelled successfully" });
     } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  updateAllBookingStatusByUserId: async (req, res) => {
+    try {
+      const userId = req.userId;
+
+      // Get all bookings for the user that are Booked
+      const bookings = await Booking.find({
+        user: userId,
+        status: "Booked",
+      }).populate("class");
+
+      const currentDate = new Date();
+
+      // Filter out bookings where class doesn't exist or has no valid start time
+      const updates = bookings
+        .map((booking) => {
+          const classDate = new Date(booking.class?.startTime);
+          return currentDate > classDate ? booking._id : null;
+        })
+        .filter(Boolean);
+
+      if (updates.length === 0) {
+        return res.status(200).json({ message: "No bookings to update." });
+      }
+
+      // Update all bookings
+      await Booking.updateMany(
+        { _id: { $in: updates } },
+        { status: "Completed" }
+      );
+
+      return res
+        .status(200)
+        .json({ message: "Booking statuses updated successfully." });
+    } catch (error) {
+      console.error("Error updating booking statuses:", error);
       res.status(500).json({ message: error.message });
     }
   },

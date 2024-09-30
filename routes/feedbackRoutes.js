@@ -8,9 +8,16 @@ feedbackRouter.post("/", auth.verifyToken, feedbackController.createFeedback);
 
 // Get all feedback by trainerId
 feedbackRouter.get(
-  "/:trainerId",
+  "/feedback-trainer/:trainerId",
   auth.verifyToken,
   feedbackController.getFeedbackByTrainer
+);
+
+// Get feedback by bookingId
+feedbackRouter.get(
+  "/feedback-booking/:bookingId",
+  auth.verifyToken,
+  feedbackController.getFeedbackByBookingId
 );
 
 // Delete a feedback by feedbackId

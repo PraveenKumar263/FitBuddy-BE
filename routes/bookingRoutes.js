@@ -21,6 +21,13 @@ bookingRouter.get(
   bookingController.getBookingById
 );
 
+// Update all booking status by userId
+bookingRouter.put(
+  "/status-all",
+  auth.verifyToken,
+  bookingController.updateAllBookingStatusByUserId
+);
+
 // Update a booking by bookingId
 bookingRouter.put(
   "/:bookingId",

@@ -16,6 +16,7 @@ const trainerSchema = mongoose.Schema(
     introduction: String,
     photos: [String],
     videos: [String],
+    rating: { type: Number, min: 0, max: 5 },
   },
   {
     timestamps: true,
