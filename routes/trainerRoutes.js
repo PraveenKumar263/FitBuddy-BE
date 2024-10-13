@@ -16,9 +16,9 @@ trainerRouter.get(
   trainerController.getTrainerByUserId
 );
 
-// Update trainer information by trainerId
+// Update trainer information
 trainerRouter.put(
-  "/:userId",
+  "/update",
   auth.verifyToken,
   auth.isTrainer,
   trainerController.updateTrainer

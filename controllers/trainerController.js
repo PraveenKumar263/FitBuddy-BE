@@ -29,7 +29,7 @@ const trainerController = {
   },
   updateTrainer: async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.userId;
 
       // Check if trainer exists
       const trainer = await Trainer.findOne({ user: userId });
@@ -51,7 +51,7 @@ const trainerController = {
       const trainers = await Trainer.find()
         .sort({ rating: -1 })
         .limit(3)
-        .populate("user", "firstName lastName");
+        .populate("user", "firstName lastName profilePicture");
       return res.json(trainers || []);
     } catch (error) {
       res.status(500).json({ message: error.message });

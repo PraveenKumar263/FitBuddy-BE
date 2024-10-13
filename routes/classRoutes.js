@@ -7,10 +7,10 @@ const auth = require("../utils/auth");
 classRouter.get("/featured", classController.getFeaturedClasses);
 
 // Get all classes
-classRouter.get("/", auth.verifyToken, classController.getAllClasses);
+classRouter.get("/", classController.getAllClasses);
 
 // Get a specific class by classId
-classRouter.get("/:classId", auth.verifyToken, classController.getClassById);
+classRouter.get("/:classId", classController.getClassById);
 
 // Get a classes by trainerId
 classRouter.get(

@@ -12,7 +12,6 @@ const trainerSchema = mongoose.Schema(
     qualifications: [String],
     expertise: [String],
     specializations: [String],
-    profilePicture: String,
     introduction: String,
     photos: [String],
     videos: [String],
