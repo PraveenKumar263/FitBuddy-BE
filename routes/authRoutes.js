@@ -38,7 +38,7 @@ authRouter.post(
 );
 
 // User logout
-authRouter.post("/logout", auth.verifyToken, authController.logout);
+authRouter.post("/logout", authController.logout);
 
 // Check if user is authenticated
 authRouter.get("/checkAuth", auth.verifyToken, authController.isAuthenticated);
