@@ -213,6 +213,7 @@ const authController = {
         .clearCookie("token", {
           httpOnly: true,
           secure: CURRENT_ENV === "production",
+          path: "/",
         })
         .json({ message: "Logout successful" });
     } catch (error) {
