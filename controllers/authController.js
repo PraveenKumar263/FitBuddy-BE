@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { SALT_ROUNDS, SECRET_KEY } = require("../utils/config");
+const { SALT_ROUNDS, SECRET_KEY, CURRENT_ENV } = require("../utils/config");
 const Trainer = require("../models/trainer");
 const mongoose = require("mongoose");
 const {
@@ -126,8 +126,8 @@ const authController = {
       // Store the token in the cookie
       res.cookie("token", token, {
         httpOnly: true,
-        sameSite: "lax", // none for prod
-        secure: false, // Change to true if using HTTPS
+        sameSite: CURRENT_ENV === "dev" ? "lax" : "",
+        secure: CURRENT_ENV === "dev" ? false : true,
         maxAge: 24 * 60 * 60 * 1000,
       });
 

@@ -11,6 +11,7 @@ const SMTP_EMAIL_HOST = process.env.SMTP_EMAIL_HOST || "gmail";
 const SECRET_KEY = process.env.SECRET_KEY;
 const BACKEND_LINK = process.env.BACKEND_LINK;
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+const CURRENT_ENV = process.env.CURRENT_ENV;
 
 module.exports = {
   MONGODB_URI,
@@ -24,4 +25,5 @@ module.exports = {
   SECRET_KEY,
   BACKEND_LINK,
   STRIPE_SECRET_KEY,
+  CURRENT_ENV,
 };
