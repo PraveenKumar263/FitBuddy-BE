@@ -126,7 +126,7 @@ const authController = {
       // Store the token in the cookie
       res.cookie("token", token, {
         httpOnly: true,
-        sameSite: CURRENT_ENV === "dev" ? "lax" : "",
+        sameSite: CURRENT_ENV === "dev" ? "lax" : "none",
         secure: CURRENT_ENV === "dev" ? false : true,
         maxAge: 24 * 60 * 60 * 1000,
       });
